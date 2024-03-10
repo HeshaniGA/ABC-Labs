@@ -43,8 +43,9 @@
                                             <td th:text="${user.id}"></td>
                                             <td th:text="${user.fullname}"></td>
                                             <td th:text="${user.email}"></td>
-                                            <td th:text="${user.role}"></td>
-
+                                            <td th:if="${user.role eq 'ADMIN'}" class="text-danger" th:text="${user.role}">ADMIN</td>
+                                            <td th:if="${user.role eq 'USER'}" class="text-secondary" th:text="${user.role}">USER</td>
+                                            <td th:unless="${user.role eq 'ADMIN' or user.role eq 'USER'}"  class="text-primary" th:text="${user.role}">TECHNICIAN</td>
                                             <td>
 
                                                 <button class="btn btn-danger" th:data-userid="${user.id}" th:data-username="${user.fullname}" onclick="confirmDelete(this)">Delete</button>

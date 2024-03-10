@@ -98,67 +98,62 @@
     <div th:replace="fragments/navbar :: navbar"></div>
 
 
-<section class="hero-section">
-    <h1 class="display-4">Welcome to ABC Laboratories</h1>
-    <p class="lead">Your trusted partner for medical tests and lab services</p>
-</section>
-    <!-- Services Section -->
-    <div class="container section">
-        <div class="row">
-            <!-- Existing Service Cards -->
-            <!-- Add more service cards as needed -->
+  <!-- Add Test Form -->
+  <div class="container section">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Add New Test</h2>
+                    <!-- Add your form action and method -->
+                    <form th:action="@{/tests/add}" method="post" th:object="${test}" enctype="multipart/form-data">
+                        <!-- Add your form fields -->
 
-            <div class="col-lg-4 mb-4">
-                <div class="card service-card">
-                    <i class="fa fa-flask fa-xl" aria-hidden="true"></i>
-                    <div class="card-body">
-                        <h5 class="card-title">Advanced Testing</h5>
-                        <p class="card-text">Explore our advanced testing services using cutting-edge technology.</p>
-                    </div>
-                </div>
-            </div>
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientId">Patient ID:</label>
+                            <input type="text" id="patientId" name="patientId" class="form-control" th:value="${userid}" readonly>
+                        </div>
 
-            <div class="col-lg-4 mb-4">
-                <div class="card service-card">
-                    <i class="fa fa-users fa-xl" aria-hidden="true"></i>
-                    <div class="card-body">
-                        <h5 class="card-title">Expert Staff</h5>
-                        <p class="card-text">Our team of expert professionals ensures accurate and reliable results.</p>
-                    </div>
-                </div>
-            </div>
+                        <div class="form-group">
+                            <label for="patientName">Patient Name:</label>
+                            <input type="text" id="patientName" name="patientName" class="form-control" th:value="${username}" readonly>
+                        </div>
 
-            <div class="col-lg-4 mb-4">
-                <div class="card service-card">
-                    <i class="fa fa-clock fa-xl" aria-hidden="true"></i>
-                    <div class="card-body">
-                        <h5 class="card-title">Quick Turnaround</h5>
-                        <p class="card-text">Experience fast and efficient service with quick result turnaround.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Contact Section -->
-    <div class="container-fluid contact-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h2>Contact Us</h2>
-                    <p>Have questions or need assistance? Reach out to our support team.</p>
-                    <ul>
-                        <li>Email: info@abclabs.com</li>
-                        <li>Phone: +1 (123) 456-7890</li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <img th:src="@{../images/contact.jpg}" alt="Contact Us" class="img-fluid">
+                        <div class="form-group">
+                            <label for="age">Age:</label>
+                            <input type="text" id="age" name="age" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recommendedDoctor">Recommended Doctor:</label>
+                            <input type="text" id="recommendedDoctor" name="recommendedDoctor" class="form-control" required>
+                        </div>
+
+                 
+
+                        
+                            <Input id="state" name="state" class="form-control" hidden value="PENDING" required>
+                          
+
+                        <div class="form-group">
+                            <label for="prescriptionFile">Prescription:</label>
+                            <input type="file" id="prescriptionFile" name="prescriptionFile" accept=".pdf, .jpg, .png">
+                        </div>
+
+
+                        <button type="submit" class="btn btn-primary">Add Test</button>
+                    </form>
+
                 </div>
             </div>
         </div>
     </div>
-
+</div>
     <div th:replace="fragments/footer :: footer"></div>
 
     <!-- Bootstrap JS and Popper.js -->
