@@ -9,10 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.ABCLab.dto.UserDto;
+import com.example.ABCLab.model.User;
 import com.example.ABCLab.service.UserService;
+import java.util.List;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class UserController {
@@ -30,10 +35,17 @@ public class UserController {
 	}
 	
 	@PostMapping("/registration")
-	public String saveUser(@ModelAttribute("user") UserDto userDto, Model model) {
+	public String saveUser(@ModelAttribute("user") UserDto userDto, Model model,HttpServletRequest request) {
 		userService.save(userDto);
-		model.addAttribute("message", "Registered Successfuly!");
-		return "redirect:/login";
+		model.addAttribute("message", "Registered Successfuly!please login ");
+		return "redirect:/login"; 
+	}
+	@PostMapping("/admin/addUser")
+	public String addUser(@ModelAttribute("user") UserDto userDto, Model model,HttpServletRequest request) {
+		userService.save(userDto);
+		model.addAttribute("message", "Registered Successfuly");
+		return "admin/adduser";
+
 	}
 	
 	@GetMapping("/login")
@@ -53,7 +65,25 @@ public class UserController {
 	public String adminPage (Model model, Principal principal) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
-		return "admin";
+		return "admin/admin";
 	}
+	@GetMapping("/admin/adduser")
+	public String adduserPage (Model model, Principal principal) {
+		return "admin/adduser";
+	}
+	@GetMapping("/admin/users")
+    public String listUsers(Model model) {
+        List<User> userList = userService.getAllUsers();
+
+        model.addAttribute("users", userList);
+
+        return "admin/userlist";
+    }
+	    @GetMapping("/admin/deleteUser/{userId}")
+    public String deleteUser(@PathVariable Long userId, Model model) {
+        userService.deleteUser(userId);
+        model.addAttribute("message", "User deleted successfully");
+        return "redirect:/admin/users";
+    }
 
 }

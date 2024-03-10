@@ -1,41 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
-     <link rel="stylesheet" th:href="@{../css/styles.css}">
+    <link rel="stylesheet" th:href="@{../css/styles.css}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        .message {
+            color: #dc3545;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
+    <!-- Include the navbar fragment -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
     <div class="container">
         <div class="message" th:if="${message != null}">
-           [[${message}]]
+            [[${message}]]
         </div>
+
         <h2>Registration Form</h2>
-        <form 
-         th:action="@{/registration}"
-         method="post"
-         role="form"
-         th:object="${user}"
-        >
+        <form th:action="@{/registration}" method="post" role="form" th:object="${user}">
             <div class="form-group">
                 <label for="fullname">Fullname:</label>
-                <input th:field="*{fullname}" type="text" id="fullname" name="fullname" placeholder="Enter your fullname" required>
+                <input th:field="*{fullname}" type="text" id="fullname" name="fullname"
+                    placeholder="Enter your fullname" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input th:field="*{email}" type="email" id="email" name="email" placeholder="Enter your email" required>
+                <input th:field="*{email}" type="email" id="email" name="email" placeholder="Enter your email"
+                    required>
             </div>
-          
-            
+
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input th:field="*{password}" type="password" id="password" name="password" placeholder="Enter your password" required>
+                <input th:field="*{password}" type="password" id="password" name="password"
+                    placeholder="Enter your password" required>
             </div>
-            <input type="submit" value="Register">
+            <input th:field="*{role}" type="text" name="role" id="role" hidden value="USER">
+            <input type="submit" class="btn btn-primary" value="Register">
         </form>
-        
     </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
+
 </html>
