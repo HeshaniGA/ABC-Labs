@@ -33,7 +33,7 @@ public class UserController {
 	public String saveUser(@ModelAttribute("user") UserDto userDto, Model model) {
 		userService.save(userDto);
 		model.addAttribute("message", "Registered Successfuly!");
-		return "register";
+		return "redirect:/login";
 	}
 	
 	@GetMapping("/login")
@@ -41,10 +41,11 @@ public class UserController {
 		return "login";
 	}
 	
-	@GetMapping("user-page")
+	@GetMapping("/user-page")
 	public String userPage (Model model, Principal principal) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
+
 		return "user";
 	}
 	
