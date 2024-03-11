@@ -66,6 +66,13 @@ public class UserController {
 		model.addAttribute("user", userDetails);
 		return "admin/admin";
 	}
+
+	@GetMapping("/tech/home")
+	public String techPage (Model model, Principal principal) {
+		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+		model.addAttribute("user", userDetails);
+		return "tech/home";
+	}
 	@GetMapping("/admin/adduser")
 	public String adduserPage (Model model, Principal principal) {
 		return "admin/adduser";

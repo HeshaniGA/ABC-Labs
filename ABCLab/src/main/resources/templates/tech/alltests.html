@@ -17,7 +17,7 @@
         <div th:replace="fragments/Dash/admin/navbar :: navbar"></div>
 
         <div id="layoutSidenav">
-            <div th:replace="fragments/dash/admin/sidenav :: sidenav"></div>
+            <div th:replace="fragments/dash/tech/sidenav :: sidenav"></div>
 
             <div id="layoutSidenav_content">
                 <main>
@@ -56,30 +56,35 @@
                 <td>
                     <span th:text="${test.state}"></span>
                 
-                    <!-- Form for accepting a test -->
-                    <form th:if="${#strings.toString(test.state)} == 'PENDING'" th:action="@{/tests/updateState/{id}(id=${test.id})}" method="post">
-                        <input type="hidden" name="state" value="ACCEPTED" />
-                        <button class="btn btn-success btn-sm" type="submit">Accept</button>
-                    </form>
-                
-                    <!-- Form for rejecting a test -->
-                    <form th:if="${#strings.toString(test.state)} == 'PENDING'" th:action="@{/tests/updateState/{id}(id=${test.id})}" method="post">
-                        <input type="hidden" name="state" value="REJECTED" />
-                        <button class="btn btn-danger btn-sm" type="submit">Reject</button>
-                    </form>
-                
-                    <!-- Form for completing an accepted test -->
-                    <form th:if="${#strings.toString(test.state)} == 'ACCEPTED'" th:action="@{/tests/updateState/{id}(id=${test.id})}" method="post">
-                        <input type="hidden" name="state" value="COMPLETED" />
-                        <button class="btn btn-primary btn-sm" type="submit">Complete</button>
-                    </form>
+           
                 </td>
                 
                 <td>
                     <a th:href="@{'/uploaded/' + ${test.prescriptionFileName}}" class="btn btn-primary btn-sm" download>Download</a>
                 </td>
                 <td>
-                  Add Result
+                          <!-- Form for accepting a test -->
+                          <form th:if="${#strings.toString(test.state)} == 'PENDING'" th:action="@{/tests/updateState/{id}(id=${test.id})}" method="post">
+                            <input type="hidden" name="state" value="ACCEPTED" />
+                            <button class="btn btn-success btn-sm" type="submit">Accept</button>
+                        </form>
+                    
+                        <!-- Form for rejecting a test -->
+                        <form th:if="${#strings.toString(test.state)} == 'PENDING'" th:action="@{/tests/updateState/{id}(id=${test.id})}" method="post">
+                            <input type="hidden" name="state" value="REJECTED" />
+                            <button class="btn btn-danger btn-sm" type="submit">Reject</button>
+                        </form>
+                    
+                        <!-- Form for completing an accepted test -->
+                        <form th:if="${#strings.toString(test.state)} == 'ACCEPTED'" th:action="@{/tests/updateState/{id}(id=${test.id})}" method="post">
+                            <input type="hidden" name="state" value="COMPLETED" />
+                            <button class="btn btn-primary btn-sm" type="submit">Complete</button>
+                        </form>
+                </td>
+                <td>
+                    <a href="/tech/result/" class="success btn-success">
+                        Add Result
+                </a>
                 </td>
             </tr>
         </tbody>
