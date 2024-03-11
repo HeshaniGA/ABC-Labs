@@ -9,6 +9,8 @@ public class TestDto {
     private Long patientId;
     private int age;
     private String recommendedDoctor;
+    private String payment = "PENDING";
+
     private String technician;
     private TestState state;
     private MultipartFile prescriptionFile;
@@ -45,6 +47,14 @@ public class TestDto {
 
     public Long getPatientId() {
         return this.patientId;
+    }
+
+    public String getPayment() {
+        return this.payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 
     public void setPatientId(Long patientId) {

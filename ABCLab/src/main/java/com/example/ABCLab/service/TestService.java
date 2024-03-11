@@ -21,4 +21,6 @@ public interface TestService {
     void updateTestStateById(Long id, TestState state,String technicianName);
     
  List<Test> getTestsByTechnician(String technicianName);
+ void updatePaymentStatus(Long testId, String paymentStatus);
+
 }

@@ -30,7 +30,7 @@ public class Test {
 
     private int age;
     private String prescriptionFileName;
-
+    private String payment = "PENDING";
     
     private String recommendedDoctor;
 
@@ -81,6 +81,14 @@ public class Test {
 
     public void setPatientId(Long patientId) {
         this.patientId = patientId;
+    }
+
+    public String getPayment() {
+        return this.payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 
     public int getAge() {

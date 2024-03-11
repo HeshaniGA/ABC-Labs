@@ -3,10 +3,14 @@ package com.example.ABCLab.service;
 import com.example.ABCLab.model.Test;
 import com.example.ABCLab.model.TestState;
 import com.example.ABCLab.repositories.TestRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TestServiceImpl implements TestService {
@@ -51,5 +55,15 @@ public class TestServiceImpl implements TestService {
     @Override
     public List<Test> getTestsByTechnician(String technicianName) {
         return testRepository.findByTechnician(technicianName);
+    }
+    @Override
+    @Transactional
+    public void updatePaymentStatus(Long testId, String paymentStatus) {
+        Optional<Test> optionalTest = testRepository.findById(testId);
+
+        optionalTest.ifPresent(test -> {
+            test.setPayment(paymentStatus);
+            testRepository.save(test);
+        });
     }
 }

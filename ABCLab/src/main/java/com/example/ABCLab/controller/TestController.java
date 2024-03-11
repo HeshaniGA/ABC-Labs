@@ -100,12 +100,19 @@ public class TestController {
 
     @PostMapping("/add")
     public String addTest(@ModelAttribute("test") Test test,
-                         @RequestParam("prescriptionFile") MultipartFile prescriptionFile) {
+                         @RequestParam("prescriptionFile") MultipartFile prescriptionFile,
+                         Model model) {
         String prescriptionFileName = savePrescriptionFile(prescriptionFile);
         test.setPrescriptionFileName(prescriptionFileName);
-
-        testService.saveTest(test);
-        return "tests/addtest";
+    
+        // Save the test and get the generated test ID
+        Test savedTest = testService.saveTest(test);
+        Long testId = savedTest.getId();
+    
+        // Add the test ID as a model attribute for access in the payment page
+        model.addAttribute("testId", testId);
+    
+        return "tests/payment";
     }
     @GetMapping("/user-tests")
     public String getUserTests(Model model, Principal principal) {
@@ -137,6 +144,11 @@ public String getTestsByTechnician(Model model, Principal principal) {
     List<Test> tests = testService.getTestsByTechnician(username);
     model.addAttribute("tests", tests);
     return "tech/alltests";
+}
+@PostMapping("/updatePaymentStatus/{id}")
+public String updatePaymentStatus(@PathVariable Long id) {
+    testService.updatePaymentStatus(id, "PAID");
+    return "redirect:/tests/user-tests" ; 
 }
 
 }
