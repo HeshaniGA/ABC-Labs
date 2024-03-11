@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -127,7 +128,15 @@ public String updateTestState(@PathVariable Long id, @RequestParam String state,
     testService.updateTestStateById(id, newState,username);
 
     // Redirect to the "/tests/all" endpoint
-    return "redirect:/tests/all";
+    return "redirect:/tests/tech/all";
+}
+@GetMapping("/tech/mytests")
+public String getTestsByTechnician(Model model, Principal principal) {
+    UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+    String username = userDetails.getUsername();
+    List<Test> tests = testService.getTestsByTechnician(username);
+    model.addAttribute("tests", tests);
+    return "tech/alltests";
 }
 
 }

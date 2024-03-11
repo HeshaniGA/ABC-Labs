@@ -21,5 +21,6 @@ public class TestResultServiceImpl implements TestResultService {
     public void saveAll(List<TestResult> testResults) {
         testResultRepository.saveAll(testResults);
     }
+    
 
 }
