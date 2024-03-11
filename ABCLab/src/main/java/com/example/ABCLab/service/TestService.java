@@ -18,5 +18,5 @@ public interface TestService {
 
     // List<Test> getTestsByState(TestState state);
 
-    void updateTestStateById(Long id, TestState state);
+    void updateTestStateById(Long id, TestState state,String technicianName);
 }

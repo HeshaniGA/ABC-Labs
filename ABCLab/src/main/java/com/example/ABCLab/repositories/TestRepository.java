@@ -23,9 +23,10 @@ public interface TestRepository extends JpaRepository<Test, Long> {
     // List<Test> findByTechnician(String technician);
 
     // List<Test> findByState(TestState state);
-   @Modifying
+    @Modifying
     @Transactional
-    @Query("UPDATE Test t SET t.state = :state WHERE t.id = :id")
-
-    void updateTestStateById(@Param("id") Long id, @Param("state") TestState state);
+    @Query("UPDATE Test t SET t.state = :state, t.technician = :technicianName WHERE t.id = :id")
+    void updateTestStateById(@Param("id") Long id, 
+                             @Param("state") TestState state, 
+                             @Param("technicianName") String technicianName);
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.ABCLab.dto.UserDto;
@@ -79,11 +78,6 @@ public class UserController {
 
         return "admin/userlist";
     }
-	    @GetMapping("/admin/deleteUser/{userId}")
-    public String deleteUser(@PathVariable Long userId, Model model) {
-        userService.deleteUser(userId);
-        model.addAttribute("message", "User deleted successfully");
-        return "redirect:/admin/users";
-    }
+	
 
 }

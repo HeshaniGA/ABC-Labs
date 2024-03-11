@@ -118,12 +118,13 @@ public class TestController {
 }
 
 @PostMapping("/updateState/{id}")
-public String updateTestState(@PathVariable Long id, @RequestParam String state) {
+public String updateTestState(@PathVariable Long id, @RequestParam String state,Principal principal) {
     // Convert the string to TestState enum
     TestState newState = TestState.valueOf(state);
-
+    UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+    String username= userDetails.getUsername();
     // Call the service method to update the state
-    testService.updateTestStateById(id, newState);
+    testService.updateTestStateById(id, newState,username);
 
     // Redirect to the "/tests/all" endpoint
     return "redirect:/tests/all";

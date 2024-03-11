@@ -44,7 +44,7 @@ public class TestServiceImpl implements TestService {
     // }
 
     @Override
-    public void updateTestStateById(Long id, TestState state) {
-        testRepository.updateTestStateById(id, state);
+    public void updateTestStateById(Long id, TestState state,String technicianName) {
+        testRepository.updateTestStateById(id, state,technicianName);
     }
 }
