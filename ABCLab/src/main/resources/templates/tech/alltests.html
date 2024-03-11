@@ -10,6 +10,8 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     </head>
     <body class="sb-nav-fixed">
         <div th:replace="fragments/Dash/admin/navbar :: navbar"></div>
@@ -51,7 +53,28 @@
                 <td th:text="${test.age}"></td>
                 <td th:text="${test.recommendedDoctor}"></td>
                 <td th:text="${test.technician}"></td>
-                <td th:text="${test.state}"></td>
+                <td>
+                    <span th:text="${test.state}"></span>
+                
+                    <!-- Form for accepting a test -->
+                    <form th:if="${#strings.toString(test.state)} == 'PENDING'" th:action="@{/tests/updateState/{id}(id=${test.id})}" method="post">
+                        <input type="hidden" name="state" value="ACCEPTED" />
+                        <button class="btn btn-success btn-sm" type="submit">Accept</button>
+                    </form>
+                
+                    <!-- Form for rejecting a test -->
+                    <form th:if="${#strings.toString(test.state)} == 'PENDING'" th:action="@{/tests/updateState/{id}(id=${test.id})}" method="post">
+                        <input type="hidden" name="state" value="REJECTED" />
+                        <button class="btn btn-danger btn-sm" type="submit">Reject</button>
+                    </form>
+                
+                    <!-- Form for completing an accepted test -->
+                    <form th:if="${#strings.toString(test.state)} == 'ACCEPTED'" th:action="@{/tests/updateState/{id}(id=${test.id})}" method="post">
+                        <input type="hidden" name="state" value="COMPLETED" />
+                        <button class="btn btn-primary btn-sm" type="submit">Complete</button>
+                    </form>
+                </td>
+                
                 <td>
                     <a th:href="@{'/uploaded/' + ${test.prescriptionFileName}}" class="btn btn-primary btn-sm" download>Download</a>
                 </td>
@@ -79,6 +102,43 @@
                 </footer>
             </div>
         </div>
+        <!-- Include this script at the end of your HTML body -->
+<script>
+    function acceptTest(button) {
+        const testId = button.getAttribute('data-test-id');
+        updateTestState(testId, 'ACCEPTED');
+    }
+
+    function rejectTest(button) {
+        const testId = button.getAttribute('data-test-id');
+        updateTestState(testId, 'CANCELED');
+    }
+
+    function completeTest(button) {
+        const testId = button.getAttribute('data-test-id');
+        updateTestState(testId, 'COMPLETED');
+    }
+
+    function updateTestState(testId, newState) {
+        // Make an AJAX request to update the test state
+        $.ajax({
+            type: 'POST',
+            url: '/tests/updateState/' + testId,
+            data: {
+                state: newState
+            },
+            success: function (response) {
+                // Handle success, e.g., refresh the page or update UI
+                window.location.reload();
+            },
+            error: function (error) {
+                console.error('Error updating test state:', error);
+                // Handle error, e.g., show a message to the user
+            }
+        });
+    }
+</script>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
