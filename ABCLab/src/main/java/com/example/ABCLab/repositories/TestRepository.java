@@ -32,5 +32,7 @@ public interface TestRepository extends JpaRepository<Test, Long> {
                              @Param("technicianName") String technicianName);
 
                              List<Test> findByTechnician(String technicianName);
+                             long countByState(TestState state);
+
 
 }

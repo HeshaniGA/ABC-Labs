@@ -50,8 +50,8 @@
                                 <button type="button" class="btn btn-success mb-3" onclick="addResultFields()">Add More Results</button>
                         
                                 <br>
-                        
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <input type="text" name="testId" th:value="${testId}" readonly>
+                                <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
                             </form>
                         </div>
                         
@@ -86,7 +86,59 @@
         </div>
         <!-- Include this script at the end of your HTML body -->
 
+        <script>
+          function submitForm() {
+    // Gather form data
+    const form = document.getElementById('resultForm');
+    const formData = new FormData(form);
 
+    // Create an array to store TestResult objects
+    const testResults = [];
+
+    // Iterate over the result fields to create TestResult objects
+    document.querySelectorAll('.resultFields').forEach(resultField => {
+        const resultName = resultField.querySelector('[name="resultName[]"]').value;
+        const result = resultField.querySelector('[name="result[]"]').value;
+        const normalRange = resultField.querySelector('[name="normalRange[]"]').value;
+        const testId = formData.get("testId");
+        // Create a TestResult object and add it to the array
+        const testResult = {
+            name: resultName,
+            result: result,
+            normalRange: normalRange,
+            test:{id:testId}
+        };
+
+        testResults.push(testResult);
+    });
+
+    // Add testId to the last TestResult object in the array
+
+
+    // Convert the array of TestResult objects to JSON
+    const jsonData = JSON.stringify(testResults);
+console.log(jsonData)
+    // Send AJAX request to your Spring Boot backend
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: '/tech/result/add-all', // Update with your actual Spring Boot endpoint
+        data: jsonData,
+        success: function(response) {
+            console.log('Success:', response);
+            window.location.href = '/tests/tech/all';
+
+           
+        },
+        error: function(error) {
+            console.error('Error:', error);
+            // Handle error if needed
+        }
+    });
+}
+
+        </script>
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>

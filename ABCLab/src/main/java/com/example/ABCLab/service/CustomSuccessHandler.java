@@ -22,13 +22,13 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         if (roles.isPresent()) {
             String role = roles.get();
             if (role.equals("ADMIN")) {
-                response.sendRedirect("/admin-page");
+                response.sendRedirect("/admin/dashboard");
             } else if (role.equals("USER")) {
                 response.sendRedirect("/home");
             
             }
             else if (role.equals("TECHNICIAN")) {
-                response.sendRedirect("/tech/home");
+                response.sendRedirect("/tech/dashboard");
             } 
             else {
                 response.sendRedirect("/error");

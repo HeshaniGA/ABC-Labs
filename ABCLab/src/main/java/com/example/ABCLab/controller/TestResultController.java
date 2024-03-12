@@ -5,8 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
 
 import com.example.ABCLab.model.TestResult;
 import com.example.ABCLab.service.TestResultService;
@@ -15,13 +19,13 @@ import com.example.ABCLab.service.TestResultService;
 
 public class TestResultController {
     
+@GetMapping("tech/result/{testId}")
+public String getResultPage(@PathVariable(name = "testId") Long testId, Model model) {
+    if (testId != null) {
+        model.addAttribute("testId", testId);
+    }
 
-      @GetMapping("tech/result/")
-    public String getResultPage() {
-       
-        
-    
-        return "tech/addresults";
+    return "tech/addresults";
 }
    private final TestResultService testResultService;
 
@@ -30,8 +34,18 @@ public class TestResultController {
         this.testResultService = testResultService;
     }
 
-    @PostMapping("/add-all")
-    public void addAllTestResults(@RequestBody List<TestResult> testResults) {
+    @PostMapping("/tech/result/add-all")
+        @ResponseBody
+    public String addAllTestResults(@RequestBody List<TestResult> testResults) {
         testResultService.saveAll(testResults);
+        return "Done";
     }
+    @GetMapping("/tests/generate-report/{testId}")
+public String generateReport(@PathVariable(name = "testId") Long testId, Model model) {
+    // Logic to fetch results based on test_id and prepare data for the report
+    List<TestResult> testResults = testResultService.getTestResultsByTestId(testId);
+    model.addAttribute("testResults", testResults);
+
+    return "tests/report";
+}
 }

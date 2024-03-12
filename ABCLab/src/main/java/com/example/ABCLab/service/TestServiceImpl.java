@@ -36,7 +36,20 @@ public class TestServiceImpl implements TestService {
     public  List<Test> getTestByPatientId(Long patientId) {
         return testRepository.findByPatientId(patientId);
     }
+    @Override
+    public long getTotalTests() {
+        return testRepository.count();
+    }
 
+    @Override
+    public long getTotalPendingTests() {
+        return testRepository.countByState(TestState.PENDING);
+    }
+
+    @Override
+    public long getTotalCompletedTests() {
+        return testRepository.countByState(TestState.COMPLETED);
+    }
     // @Override
     // public List<Test> getTestsByTechnician(String technician) {
     //     return testRepository.findByTechnician(technician);

@@ -112,6 +112,7 @@
                     <th>Recommended Doctor</th>
                     <th>Technician</th>
                     <th>State</th>
+                    <th>Payment Status</th>
                     <th>Action</th> <!-- New column for the download link -->
                     <!-- Add more columns as needed -->
                 </tr>
@@ -127,9 +128,11 @@
                     <td th:text="${test.recommendedDoctor}"></td>
                     <td th:text="${test.technician}"></td>
                     <td th:text="${test.state}"></td>
+                    <td th:text="${test.payment}"></td>
                     <!-- Add download link for the prescription file -->
                     <td>
-                        <a th:href="@{'/uploaded/' + ${test.prescriptionFileName}}" class="btn btn-primary btn-sm" download>Download</a>
+                        
+                        <a th:href="@{/tests/generate-report/{testId}(testId=${test.id})}" class="btn btn-primary btn-sm" >Generate Report</a>
                     </td>
                     <!-- Add more columns as needed -->
                 </tr>

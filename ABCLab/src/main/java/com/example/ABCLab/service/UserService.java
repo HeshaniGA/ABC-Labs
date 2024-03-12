@@ -10,5 +10,7 @@ public interface UserService {
 	User save (UserDto userDto);
 	 List<User> getAllUsers();
 	 void deleteUser(Long userId);
+	 long getTotalUsers();
+
 
 }

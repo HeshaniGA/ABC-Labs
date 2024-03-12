@@ -82,9 +82,9 @@
                         </form>
                 </td>
                 <td>
-                    <a href="/tech/result/" class="success btn-success">
+                    <a th:href="@{/tech/result/{testId}(testId=${test.id})}" class="success btn-success">
                         Add Result
-                </a>
+                    </a>
                 </td>
             </tr>
         </tbody>

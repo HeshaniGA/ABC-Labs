@@ -19,7 +19,11 @@ public interface TestService {
     // List<Test> getTestsByState(TestState state);
 
     void updateTestStateById(Long id, TestState state,String technicianName);
-    
+    long getTotalTests();
+
+    long getTotalPendingTests();
+
+    long getTotalCompletedTests();
  List<Test> getTestsByTechnician(String technicianName);
  void updatePaymentStatus(Long testId, String paymentStatus);
 

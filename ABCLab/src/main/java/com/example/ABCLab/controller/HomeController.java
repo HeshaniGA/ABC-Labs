@@ -23,4 +23,12 @@ public class HomeController {
     }
 		return "home";
 	}
+	@GetMapping("/")
+	public String homereturn(Model model, Principal principal) {
+			   if (principal != null) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", userDetails);
+    }
+		return "home";
+	}
 }
