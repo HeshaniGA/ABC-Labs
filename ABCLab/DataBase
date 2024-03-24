@@ -1,0 +1,159 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 24, 2024 at 03:54 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `abcdb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test`
+--
+
+CREATE TABLE `test` (
+  `id` bigint(20) NOT NULL,
+  `age` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `patient_id` bigint(20) NOT NULL,
+  `patient_name` varchar(255) DEFAULT NULL,
+  `payment` varchar(255) DEFAULT NULL,
+  `prescription_file_name` varchar(255) DEFAULT NULL,
+  `recommended_doctor` varchar(255) DEFAULT NULL,
+  `state` enum('PENDING','ACCEPTED','COMPLETED','REJECTED') DEFAULT NULL,
+  `technician` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `testresult`
+--
+
+CREATE TABLE `testresult` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `normal_range` varchar(255) DEFAULT NULL,
+  `result` varchar(255) DEFAULT NULL,
+  `test_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `testresult_seq`
+--
+
+CREATE TABLE `testresult_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `testresult_seq`
+--
+
+INSERT INTO `testresult_seq` (`next_val`) VALUES
+(1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_seq`
+--
+
+CREATE TABLE `test_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `test_seq`
+--
+
+INSERT INTO `test_seq` (`next_val`) VALUES
+(1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `fullname` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_seq`
+--
+
+CREATE TABLE `users_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users_seq`
+--
+
+INSERT INTO `users_seq` (`next_val`) VALUES
+(1);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `test`
+--
+ALTER TABLE `test`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `testresult`
+--
+ALTER TABLE `testresult`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKocvxcqptr5ra64x2kqdnguu99` (`test_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `testresult`
+--
+ALTER TABLE `testresult`
+  ADD CONSTRAINT `FKocvxcqptr5ra64x2kqdnguu99` FOREIGN KEY (`test_id`) REFERENCES `test` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
